@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,20 +15,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.green),
-      home: const GalleryAccess(),
+      home: const MultipleImageSelector(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class GalleryAccess extends StatefulWidget {
-  const GalleryAccess({super.key});
+class MultipleImageSelector extends StatefulWidget {
+  const MultipleImageSelector({super.key});
 
   @override
-  State<GalleryAccess> createState() => _GalleryAccessState();
+  State<MultipleImageSelector> createState() => _MultipleImageSelectorState();
 }
 
-class _GalleryAccessState extends State<GalleryAccess> {
+class _MultipleImageSelectorState extends State<MultipleImageSelector> {
   List<File> selectedImages = [];
   final picker = ImagePicker();
   @override
@@ -77,7 +78,10 @@ class _GalleryAccessState extends State<GalleryAccess> {
                                     crossAxisCount: 3),
                             itemBuilder: (BuildContext context, int index) {
                               return Center(
-                                  child: Image.file(selectedImages[index]));
+                                  child: kIsWeb
+                                      ? Image.network(
+                                          selectedImages[index].path)
+                                      : Image.file(selectedImages[index]));
                             },
                           ),
                   ),
