@@ -41,62 +41,60 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
         backgroundColor: Colors.green,
         actions: const [],
       ),
-      body: Builder(
-        builder: (BuildContext context) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green)),
-                  child: const Text('Select Image from Gallery and Camera'),
-                  onPressed: () {
-                    getImages();
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 18.0),
-                  child: Text(
-                    "GFG",
-                    textScaleFactor: 3,
-                    style: TextStyle(color: Colors.green),
-                  ),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: 300.0,
-                    child: selectedImages.isEmpty
-                        ? const Center(child: Text('Sorry nothing selected!!'))
-                        : GridView.builder(
-                            itemCount: selectedImages.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3),
-                            itemBuilder: (BuildContext context, int index) {
-                              return Center(
-                                  child: kIsWeb
-                                      ? Image.network(
-                                          selectedImages[index].path)
-                                      : Image.file(selectedImages[index]));
-                            },
-                          ),
-                  ),
-                ),
-              ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          );
-        },
+            ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green)),
+              child: const Text('Select Image from Gallery and Camera'),
+              onPressed: () {
+                getImages();
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 18.0),
+              child: Text(
+                "GFG",
+                textScaleFactor: 3,
+                style: TextStyle(color: Colors.green),
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                width: 300.0,
+                child: selectedImages.isEmpty
+                    ? const Center(child: Text('Sorry nothing selected!!'))
+                    : GridView.builder(
+                        itemCount: selectedImages.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Center(
+                              child: kIsWeb
+                                  ? Image.network(selectedImages[index].path)
+                                  : Image.file(selectedImages[index]));
+                        },
+                      ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Future getImages() async {
     final pickedFile = await picker.pickMultiImage(
-        imageQuality: 100, maxHeight: 1000, maxWidth: 1000);
+        requestFullMetadata: true,
+        imageQuality: 100,
+        maxHeight: 1000,
+        maxWidth: 1000);
     List<XFile> xfilePick = pickedFile;
 
     setState(
