@@ -37,7 +37,7 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Multiple Images Select'),
+        title: const Text('File image select'),
         backgroundColor: Colors.green,
         actions: const [],
       ),
@@ -51,7 +51,7 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
             ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.green)),
-              child: const Text('Select Image from Gallery and Camera'),
+              child: const Text('Select File Image'),
               onPressed: () {
                 getImages();
               },
@@ -77,7 +77,13 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
                         itemBuilder: (BuildContext context, int index) {
                           return Center(
                               child: kIsWeb
-                                  ? Image.network(selectedImages[index].path)
+                                  ? Image.network(
+                                      selectedImages[index].path,
+                                      height: 100,
+                                      width: 100,
+                                      fit: BoxFit.fill,
+                                      alignment: Alignment.center,
+                                    )
                                   : Image.file(selectedImages[index]));
                         },
                       ),
