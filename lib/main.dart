@@ -70,21 +70,35 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
                 child: selectedImages.isEmpty
                     ? const Center(child: Text('Sorry nothing selected!!'))
                     : GridView.builder(
-                        itemCount: selectedImages.length,
+                        itemCount: selectedImages
+                            .length, //length of file you have selected
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3),
                         itemBuilder: (BuildContext context, int index) {
                           return Center(
-                              child: kIsWeb
-                                  ? Image.network(
-                                      selectedImages[index].path,
-                                      height: 100,
-                                      width: 100,
-                                      fit: BoxFit.fill,
-                                      alignment: Alignment.center,
-                                    )
-                                  : Image.file(selectedImages[index]));
+                              child:
+                                  kIsWeb //If it is web then you have use Image.network Image.file will not work
+                                      ? Image.network(
+                                          selectedImages[index].path,
+                                          height:
+                                              100, //Height of image selected
+                                          width: 100, //width of image selected
+                                          fit: BoxFit
+                                              .fill, //fit image in its width and height
+                                          alignment: Alignment
+                                              .center, //set the alignment of image
+                                        )
+                                      : Image.file(
+                                          selectedImages[index],
+                                          height:
+                                              100, //Height of image selected
+                                          width: 100, //width of image selected
+                                          fit: BoxFit
+                                              .fill, //fit image in its width and height
+                                          alignment: Alignment
+                                              .center, //set the alignment of image
+                                        ));
                         },
                       ),
               ),
